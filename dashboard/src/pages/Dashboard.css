@@ -1,0 +1,12 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard{
+    display: flex; 
+}
+
+.con{
+    padding: 1em;
+}
+

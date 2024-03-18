@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 20%;
+    background-color: #303030;
+    font-size: 18px;
+}
+
+.conSidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    margin-left: 20px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    color: white;
+    gap: 5px;
+}
