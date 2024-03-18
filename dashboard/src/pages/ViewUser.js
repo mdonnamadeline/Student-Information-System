@@ -206,7 +206,7 @@ function ViewUser() {
                                     variant="outlined"
                                     value={currentUser.firstname}
                                     onChange={handleChange}
-                                    inputProps={{ pattern: "^[A-Za-z]+$" }}
+                                    inputProps={{ pattern: "^[A-Za-z]+$ " }}
                                 />
                                 <TextField
                                     required
@@ -216,7 +216,7 @@ function ViewUser() {
                                     variant="outlined"
                                     value={currentUser.lastname}
                                     onChange={handleChange}
-                                    inputProps={{ pattern: "^[A-Za-z]+$" }}
+                                    inputProps={{ pattern: "^[A-Za-z]+$ " }}
                                 />
                                 <TextField
                                     required
@@ -226,7 +226,7 @@ function ViewUser() {
                                     variant="outlined"
                                     value={currentUser.middlename}
                                     onChange={handleChange}
-                                    inputProps={{ pattern: "^[A-Za-z]+$" }}
+                                    inputProps={{ pattern: "^[A-Za-z]+$ " }}
                                 />
                                 <TextField
                                     required
