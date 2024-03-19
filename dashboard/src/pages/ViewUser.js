@@ -163,7 +163,6 @@ function ViewUser() {
                   <TableCell>{users.lastname}</TableCell>
                   <TableCell>{users.middlename}</TableCell>
                   <TableCell>{users.email}</TableCell>
-                  <TableCell>
                     <TableCell>
                       <Button
                         variant="contained"
@@ -172,7 +171,6 @@ function ViewUser() {
                         EDIT
                       </Button>
                     </TableCell>
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
