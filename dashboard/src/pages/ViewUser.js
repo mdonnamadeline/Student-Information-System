@@ -113,10 +113,6 @@ function ViewUser() {
   const handleAddUser = async (e) => {
     e.preventDefault();
 
-    if (!user.middlename) {
-        user.middlename = '';
-      }
-    
     try {
       const response = await axios.post("http://localhost:1337/adduser", user);
 
@@ -151,7 +147,7 @@ function ViewUser() {
                 <TableCell>First Name</TableCell>
                 <TableCell>Last Name</TableCell>
                 <TableCell>Middle Name</TableCell>
-                <TableCell>Email</TableCell>
+                <TableCell>Username</TableCell>
                 <TableCell>EDIT</TableCell>
               </TableRow>
             </TableHead>
@@ -163,14 +159,15 @@ function ViewUser() {
                   <TableCell>{users.lastname}</TableCell>
                   <TableCell>{users.middlename}</TableCell>
                   <TableCell>{users.email}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        onClick={() => handleOpen(users, true)}
-                      >
-                        EDIT
-                      </Button>
-                    </TableCell>
+
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      onClick={() => handleOpen(users, true)}
+                    >
+                      EDIT
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -195,7 +192,7 @@ function ViewUser() {
                   variant="outlined"
                   value={currentUser.firstname}
                   onChange={handleChange}
-                  inputProps={{ pattern: "^[a-zA-Z-\\s]*$" }}
+                  inputProps={{ pattern: "^[A-Za-z ]+$" }}
                 />
                 <TextField
                   required
@@ -205,7 +202,7 @@ function ViewUser() {
                   variant="outlined"
                   value={currentUser.lastname}
                   onChange={handleChange}
-                  inputProps={{ pattern: "^[a-zA-Z-\\s]*$" }}
+                  inputProps={{ pattern: "^[A-Za-z ]+$" }}
                 />
                 <TextField
                   id="middlename"
@@ -214,21 +211,17 @@ function ViewUser() {
                   variant="outlined"
                   value={currentUser.middlename}
                   onChange={handleChange}
-                  inputProps={{ pattern: "^[a-zA-Z-\\s]*$" }}
+                  inputProps={{ pattern: "^[A-Za-z ]+$" }}
                 />
                 <TextField
                   required
                   name="email"
-                  label="email"
+                  label="Email"
                   disabled={isEditMode}
                   variant="outlined"
                   value={currentUser.email}
                   onChange={handleChange}
-                  inputProps={{
-                    pattern:
-                      "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-                  }}
-                />
+                  inputProps={{ pattern: "^[A-Za-z @.]+$" }}                />
                 <TextField
                   id="password"
                   required
@@ -237,7 +230,6 @@ function ViewUser() {
                   variant="outlined"
                   value={currentUser.password}
                   onChange={handleChange}
-                  inputProps={{ pattern: "^[a-zA-Z0-9_!]*$" }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
