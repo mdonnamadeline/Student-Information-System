@@ -51,7 +51,7 @@ app.post("/addStudent", (req, res) => {
 });
 //end for adding student
 
-//new
+//update added student
 //Route to handle POST modify the data of the students
 app.post("/updatestudent", async (req, res) => {
   const studentData = req.body;
@@ -136,4 +136,31 @@ app.post("/updateuser", async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+// Login route
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    // Compare the provided password with the password in the database
+    if (password !== user.password) {
+      return res.json({ success: false, message: "Invalid credentials" });
+    }
+
+    // User is authenticated
+    res.json({ success: true, message: "User authenticated successfully" });
+  } catch (error) {
+    console.error("Error during authentication:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
