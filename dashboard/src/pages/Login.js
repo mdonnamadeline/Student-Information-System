@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import "./Login.css";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
+
 
 function Login() {
   const [user, setUser] = useState({
@@ -11,6 +14,8 @@ function Login() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setUser({
@@ -25,7 +30,7 @@ function Login() {
         const result = await response.data;
   
         if (result.success) {
-            //route to next page
+            navigate('/');
         }
         alert(result.message);
       } catch (error) {
