@@ -6,6 +6,7 @@ import axios from "axios";
 import "./SignUp.css";
 
 function SignUp() {
+  //MARK: LOGIC
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -17,6 +18,10 @@ function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/login');
+  };
 
   const handleChange = (e) => {
     setUser({
@@ -40,7 +45,7 @@ function SignUp() {
       alert("An error occured. Please try again.");
     }
   };
-
+  //MARK:DISPLAY
   return (
     <div className="SignUpContainer">
       <div className="SignUpMain">
@@ -108,6 +113,9 @@ function SignUp() {
           <div className="btnGroup">
             <Button variant="contained" type="submit">
               SignUp
+            </Button>
+            <Button variant="contained" onClick={handleBack}>
+              Back
             </Button>
           </div>
         </form>

@@ -1,6 +1,7 @@
 //import the Express module
 const express = require("express");
 const mongoose = require('mongoose');
+const Student = require("./models/student.model");
 const User = require("./models/user.model");
 const app = express();
 
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
-
+//MARK: OLD STUDENT
 //route to view added student
 app.get("/viewStudents", (req, res) => {
   try {
@@ -88,6 +89,7 @@ app.listen(port, () => {
   console.log(`Server running on ${port}`);
 });
 
+//MARK:MONGODB
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/ipt', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Database connected successfully'))
@@ -137,7 +139,7 @@ app.post("/updateuser", async (req, res) => {
   }
 });
 
-
+//MARK:LOGIN
 // Login route
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -163,5 +165,47 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//SignUp Route
+//MARK: SIGNUP
+//add user
+app.post("/addstudents", async (req, res) => {
+  const incomingData = req.body;
 
+  try {
+      const user = new Student(incomingData);
+      await user.save();
+      res.json({ success: true, message: "User added successfully!" });
+  } catch (error) {
+      console.error("Error adding User:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//read users
+app.get("/viewmanagestudent", async (req, res) => {
+  try {
+      const users = await Student.find({});
+      res.json(users);
+  } catch (error) {
+      console.error("Error reading student data:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//update user
+app.post("/updatestudents", async (req, res) => {
+  const incomingData = req.body;
+
+  try {
+      const user = await Student.findOne({ email: incomingData.email });
+      if (!user) {
+          res.json({ success: false, message: "User not found" });
+      } else {
+          Object.assign(user, incomingData);
+          await user.save();
+          res.json({ success: true, message: "User updated successfully!" });
+      }
+  } catch (error) {
+      console.error("Error updating User:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});

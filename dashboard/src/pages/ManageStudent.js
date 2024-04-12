@@ -1,11 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import './ManageStudent.css'
-import { Box, Button, IconButton, InputAdornment, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import React, { useEffect, useState } from "react";
+import "./ManageStudent.css";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Sidebar from "./Sidebar";
 import "./Sidebar";
-import axios from 'axios';
-
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -19,21 +33,20 @@ const style = {
   p: 4,
 };
 
-
 function ManageStudent() {
+  //MARK: LOGIC
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [refreshData, setRefreshData] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
 
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
     middlename: "",
-    email: "",
-    password: "",
+    course: "",
+    year: "",
   });
 
   function handleOpen(user, edit) {
@@ -46,12 +59,10 @@ function ManageStudent() {
   function handleClose() {
     setOpen(false);
   }
-  // for password
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:1337/managestudent`)
+      .get(`http://localhost:1337/viewmanagestudent`)
       .then((response) => {
         setUsers(response.data);
       })
@@ -75,7 +86,7 @@ function ManageStudent() {
 
     try {
       const response = await axios.post(
-        "http://localhost:1337/updateuser",
+        "http://localhost:1337/updatestudents",
         currentUser
       );
 
@@ -98,7 +109,10 @@ function ManageStudent() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:1337/adduser", user);
+      const response = await axios.post(
+        "http://localhost:1337/addstudents",
+        user
+      );
 
       const result = await response.data;
 
@@ -113,19 +127,21 @@ function ManageStudent() {
     }
   };
 
+  //MARK: DISPLAY
   return (
     <div className="manageUser">
-            <Sidebar />
-    <div className="manageuserContainer">
-      <h1>MANAGE STUDENT</h1>
-      <TableContainer style={{ maxHeight: 500 }}>
+      <Sidebar />
+      <div className="manageuserContainer">
+        <h1>MANAGE STUDENT</h1>
+        <TableContainer style={{ maxHeight: 500 }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell>First Name</TableCell>
                 <TableCell>Last Name</TableCell>
                 <TableCell>Middle Name</TableCell>
-                <TableCell>Username</TableCell>
+                <TableCell>Course</TableCell>
+                <TableCell>Year</TableCell>
                 <TableCell>EDIT</TableCell>
               </TableRow>
             </TableHead>
@@ -136,8 +152,8 @@ function ManageStudent() {
                   <TableCell>{users.firstname}</TableCell>
                   <TableCell>{users.lastname}</TableCell>
                   <TableCell>{users.middlename}</TableCell>
-                  <TableCell>{users.email}</TableCell>
-
+                  <TableCell>{users.course}</TableCell>
+                  <TableCell>{users.year}</TableCell>
                   <TableCell>
                     <Button
                       variant="contained"
@@ -164,63 +180,70 @@ function ManageStudent() {
               >
                 <TextField
                   required
+                  id="id"
+                  disabled
+                  label="ID Number"
+                  variant="outlined"
+                  value={user.id}
+                  onChange={handleChange}
+                  inputProps={{ maxLength: 8 }}
+                />
+
+                <TextField
+                  required
                   id="firstname"
-                  name="firstname"
                   label="First Name"
                   variant="outlined"
-                  value={currentUser.firstname}
+                  value={user.firstname}
                   onChange={handleChange}
-                  inputProps={{ pattern: "^[A-Za-z ]+$" }}
+                  inputProps={{ pattern: "^[A-Za-z]+$" }}
                 />
+
                 <TextField
                   required
                   id="lastname"
-                  name="lastname"
                   label="Last Name"
                   variant="outlined"
-                  value={currentUser.lastname}
+                  value={user.lastname}
                   onChange={handleChange}
-                  inputProps={{ pattern: "^[A-Za-z ]+$" }}
+                  inputProps={{ pattern: "^[A-Za-z]+$" }}
                 />
+
                 <TextField
                   id="middlename"
-                  name="middlename"
                   label="Middle Name"
                   variant="outlined"
-                  value={currentUser.middlename}
+                  value={user.middlename}
                   onChange={handleChange}
-                  inputProps={{ pattern: "^[A-Za-z ]+$" }}
+                  inputProps={{ pattern: "^[A-Za-z]+$" }}
                 />
+
                 <TextField
                   required
-                  name="email"
-                  label="Email"
-                  disabled={isEditMode}
+                  id="course"
+                  label="Course"
                   variant="outlined"
-                  value={currentUser.email}
+                  value={user.course}
                   onChange={handleChange}
-                  inputProps={{ pattern: "^[A-Za-z @.]+$" }}                />
-                <TextField
-                  id="password"
-                  required
-                  label="password"
-                  type={showPassword ? "text" : "password"}
-                  variant="outlined"
-                  value={currentUser.password}
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
+                  inputProps={{ pattern: "^[A-Za-z]+$" }}
                 />
+
+                <FormControl variant="outlined" required>
+                  <InputLabel id="year-label">Year</InputLabel>
+                  <Select
+                    labelId="year-label"
+                    name="year"
+                    value={user.year}
+                    onChange={handleChange}
+                    label="Year"
+                  >
+                    <MenuItem value="1">1</MenuItem>
+                    <MenuItem value="2">2</MenuItem>
+                    <MenuItem value="3">3</MenuItem>
+                    <MenuItem value="4">4</MenuItem>
+                    <MenuItem value="5">5</MenuItem>
+                  </Select>
+                </FormControl>
                 <div className="buttonGroup">
                   <Button variant="contained" onClick={handleClose}>
                     Close
@@ -233,9 +256,9 @@ function ManageStudent() {
             )}
           </Box>
         </Modal>
+      </div>
     </div>
-    </div>
-  )
+  );
 }
 
-export default ManageStudent
+export default ManageStudent;

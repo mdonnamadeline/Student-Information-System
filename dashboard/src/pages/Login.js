@@ -16,6 +16,9 @@ function Login() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
 
+  const handleSignUp = () => {
+    navigate('/signup');
+  };
 
   const handleChange = (e) => {
     setUser({
@@ -76,6 +79,7 @@ function Login() {
           />
           <div className="btnGroup">
             <Button variant="contained" type="submit" >Login</Button>
+            <Button variant="contained" onClick={handleSignUp}>SignUp</Button>
           </div>
         </form>
       </div>
