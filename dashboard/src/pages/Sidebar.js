@@ -35,6 +35,13 @@ function Sidebar() {
                     </div>
                 </Link>
 
+                <Link to="/managestudent">
+                    <div className="item">
+                        <Visibility />
+                        <p>MANAGE STUDENT</p>
+                    </div>
+                </Link>
+
                 <Link to="/demo">
                     <div className="item">
                         <HearingOutlined />
