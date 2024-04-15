@@ -1,7 +1,8 @@
 import React from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
-import { HearingOutlined, Home, Info, Visibility } from "@mui/icons-material";
+import { HearingOutlined, Home, Info,  Visibility} from "@mui/icons-material";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function Sidebar() {
     return (
@@ -48,6 +49,15 @@ function Sidebar() {
                         <p>DEMO</p>
                     </div>
                 </Link>
+
+                <Link to="/logout">
+                    <div className="item">
+                        <LogoutIcon />
+                        <p>LOGOUT</p>
+                    </div>
+                </Link>
+
+
             </div>
         </div>
     );

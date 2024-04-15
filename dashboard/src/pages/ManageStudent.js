@@ -56,6 +56,7 @@ function ManageStudent() {
     setIsEditMode(edit);
     setCurrentUser(user);
   }
+  
 
   function handleClose() {
     setOpen(false);
@@ -63,71 +64,66 @@ function ManageStudent() {
 
   useEffect(() => {
     axios
-        .get(`http://localhost:1337/viewstudentsmongo`)
-        .then((response) => {
-            setUsers(response.data);
-        })
-        .catch((error) => {
-            console.error("Error fetching data:", error);
-        });
-}, [refreshData]);
+      .get(`http://localhost:1337/viewstudentsmongo`)
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [refreshData]);
 
   const handleChange = (e) => {
-    const setFunction = isEditMode ? setCurrentUser : setUser;
-    const userObject = isEditMode ? currentUser : user;
-
-    setFunction({
-      ...userObject,
+    setUser({
+      ...user,
       [e.target.name || e.target.id]: e.target.value,
     });
   };
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
-
-        try {
-            const response = await axios.post(
-                "http://localhost:1337/updatestudentmongo",
-                currentUser
-            );
-
-            const result = response.data;
-
-            if (result.success) {
-                alert(result.message);
-                setRefreshData(!refreshData);
-                setOpen(false);
-            } else {
-                alert("Failed to update student. Please try again!.");
-            }
-        } catch (error) {
-            console.error("Error updating student:", error);
-            alert("An error occured. Please try again.");
-        }
-    };
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:1337/updatestudentmongo",
+        user
+      );
+  
+      const result = response.data;
+  
+      if (result.success) {
+        alert(result.message);
+        setRefreshData(!refreshData);
+      } else {
+        alert("Failed to update student. Please try again!.");
+      }
+    } catch (error) {
+      console.error("Error updating student:", error);
+      alert("An error occured. Please try again.");
+    }
+  };
 
   const handleAddUser = async (e) => {
     e.preventDefault();
-
-        try {
-            const response = await axios.post(
-                "http://localhost:1337/addstudentmongo",
-                currentUser
-            );
-
-            const result = await response.data;
-
-            if (result.success) {
-                setRefreshData(!refreshData);
-                setOpen(false);
-            }
-            alert(result.message);
-        } catch (error) {
-            console.error("Error adding student:", error);
-            alert("An error occured. Please try again.");
-        }
-    };
-
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:1337/addstudentmongo",
+        user // use 'user' instead of 'currentUser'
+      );
+  
+      const result = await response.data;
+  
+      if (result.success) {
+        setRefreshData(!refreshData);
+        setOpen(false);
+      }
+      alert(result.message);
+    } catch (error) {
+      console.error("Error adding student:", error);
+      alert("An error occured. Please try again.");
+    }
+  };
 
   //MARK: DISPLAY
   return (
@@ -135,6 +131,12 @@ function ManageStudent() {
       <Sidebar />
       <div className="manageuserContainer">
         <h1>MANAGE STUDENT</h1>
+        <div className="addbutton">
+          <Button variant="contained" onClick={() => handleOpen(users, false)}>
+            ADD STUDENT
+          </Button>
+          <br />
+        </div>
         <TableContainer style={{ maxHeight: 500 }}>
           <Table stickyHeader>
             <TableHead>
@@ -152,7 +154,7 @@ function ManageStudent() {
             <TableBody>
               {users.map((users) => (
                 <TableRow key={users.id}>
-                  <TableCell>{users.firstname}</TableCell>
+                  <TableCell>{users.id}</TableCell>
                   <TableCell>{users.firstname}</TableCell>
                   <TableCell>{users.lastname}</TableCell>
                   <TableCell>{users.middlename}</TableCell>
@@ -185,7 +187,7 @@ function ManageStudent() {
                 <TextField
                   required
                   id="id"
-                  disabled
+                  disabled={isEditMode}
                   label="ID Number"
                   variant="outlined"
                   value={user.id}
