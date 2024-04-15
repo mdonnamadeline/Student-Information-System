@@ -5,13 +5,14 @@ const requiredString = { type: String, required: true };
 
 const Student = new Schema(
   {
+    id: { ...requiredString, unique: true },
     firstname: requiredString,
     lastname: requiredString,
     middlename: {type: String},
-    email: { ...requiredString, unique: true },
-    password: requiredString,
+    course: requiredString,
+    year: requiredString,
   },
-  { collection: "student-data" }
+  { collection: 'StudentData' } 
 );
 
 const model = _model("StudentData", Student);

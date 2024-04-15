@@ -14,19 +14,6 @@ function Login() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
 
-  const AreYouValid = useCallback(() => {
-    const valid = localStorage.getItem('user');
-    if (valid) return navigate('/dashboard');
-  }, [navigate]);
-  
-  useEffect(() => {
-    AreYouValid();
-  }, [AreYouValid]);
-
-  const handleSignUp = () => {
-    navigate('/signup');
-  };
-
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -34,22 +21,59 @@ function Login() {
     });
   };
 
+  const handleSignUp = async (e) =>{
+    e.preventDefault();
+
+    navigate("/signup")
+  }
   const handleLogin = async (e) => {
-    e.preventDefault();  
+    e.preventDefault();
+
     try {
-        const response = await axios.post("http://localhost:1337/login", user);
-        const result = await response.data;
-  
+        const response = await axios.post(
+            "http://localhost:1337/login",
+            user
+        );
+
+        const result = response.data;
+
         if (result.success) {
-            navigate('/dashboard');
+            localStorage.setItem("user", JSON.stringify(user));
+            console.log(user);
+            navigate("/dashboard");
         }
         alert(result.message);
-      } catch (error) {
+    } catch (error) {
         console.error("Error logging in:", error);
         alert("An error occured. Please try again.");
+    }
+};
+
+useEffect(() => {
+  const authenticateUser = async () => {
+      const storedCreds = JSON.parse(localStorage.getItem("user"));
+
+      if (user) {
+          try {
+              const response = await axios.post(
+                  "http://localhost:1337/login",
+                  storedCreds
+              );
+
+              const result = response.data;
+
+              if (result.success) {
+                  navigate("/dashboard");
+              }
+          } catch (error) {
+              console.error("Error authenticating:", error);
+              alert("An error occured. Please try again.");
+          }
       }
   };
 
+  authenticateUser();
+}, []);
   return (
     <div className="loginContainer">
       <div className="loginMain">

@@ -42,6 +42,7 @@ function ManageStudent() {
   const [isEditMode, setIsEditMode] = useState(false);
 
   const [user, setUser] = useState({
+    id: "",
     firstname: "",
     lastname: "",
     middlename: "",
@@ -62,14 +63,14 @@ function ManageStudent() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:1337/viewmanagestudent`)
-      .then((response) => {
-        setUsers(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [refreshData]);
+        .get(`http://localhost:1337/viewstudentsmongo`)
+        .then((response) => {
+            setUsers(response.data);
+        })
+        .catch((error) => {
+            console.error("Error fetching data:", error);
+        });
+}, [refreshData]);
 
   const handleChange = (e) => {
     const setFunction = isEditMode ? setCurrentUser : setUser;
@@ -84,48 +85,49 @@ function ManageStudent() {
   const handleUpdateUser = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "http://localhost:1337/updatestudents",
-        currentUser
-      );
+        try {
+            const response = await axios.post(
+                "http://localhost:1337/updatestudentmongo",
+                currentUser
+            );
 
-      const result = response.data;
+            const result = response.data;
 
-      if (result.success) {
-        alert(result.message);
-        setRefreshData(!refreshData);
-        setOpen(false);
-      } else {
-        alert("Failed to update user. Please try again!.");
-      }
-    } catch (error) {
-      console.error("Error updating user:", error);
-      alert("An error occured. Please try again.");
-    }
-  };
+            if (result.success) {
+                alert(result.message);
+                setRefreshData(!refreshData);
+                setOpen(false);
+            } else {
+                alert("Failed to update student. Please try again!.");
+            }
+        } catch (error) {
+            console.error("Error updating student:", error);
+            alert("An error occured. Please try again.");
+        }
+    };
 
   const handleAddUser = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "http://localhost:1337/addstudents",
-        user
-      );
+        try {
+            const response = await axios.post(
+                "http://localhost:1337/addstudentmongo",
+                currentUser
+            );
 
-      const result = await response.data;
+            const result = await response.data;
 
-      if (result.success) {
-        setRefreshData(!refreshData);
-        setOpen(false);
-      }
-      alert(result.message);
-    } catch (error) {
-      console.error("Error adding user:", error);
-      alert("An error occured. Please try again.");
-    }
-  };
+            if (result.success) {
+                setRefreshData(!refreshData);
+                setOpen(false);
+            }
+            alert(result.message);
+        } catch (error) {
+            console.error("Error adding student:", error);
+            alert("An error occured. Please try again.");
+        }
+    };
+
 
   //MARK: DISPLAY
   return (
@@ -137,6 +139,7 @@ function ManageStudent() {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
+                <TableCell>ID</TableCell>
                 <TableCell>First Name</TableCell>
                 <TableCell>Last Name</TableCell>
                 <TableCell>Middle Name</TableCell>
@@ -149,6 +152,7 @@ function ManageStudent() {
             <TableBody>
               {users.map((users) => (
                 <TableRow key={users.id}>
+                  <TableCell>{users.firstname}</TableCell>
                   <TableCell>{users.firstname}</TableCell>
                   <TableCell>{users.lastname}</TableCell>
                   <TableCell>{users.middlename}</TableCell>

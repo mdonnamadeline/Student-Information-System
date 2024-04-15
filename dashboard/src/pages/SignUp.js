@@ -20,7 +20,7 @@ function SignUp() {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const handleChange = (e) => {
@@ -34,14 +34,15 @@ function SignUp() {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:1337/signup", user);
-      const result = await response.data;
+
+      const result = response.data;
 
       if (result.success) {
         navigate("/");
       }
       alert(result.message);
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.error("Error signing up:", error);
       alert("An error occured. Please try again.");
     }
   };
