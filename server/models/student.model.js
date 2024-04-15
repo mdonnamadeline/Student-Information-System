@@ -12,7 +12,7 @@ const Student = new Schema(
     course: requiredString,
     year: requiredString,
   },
-  { collection: 'StudentData' } 
+  { collection: 'student-data' } 
 );
 
 const model = _model("StudentData", Student);

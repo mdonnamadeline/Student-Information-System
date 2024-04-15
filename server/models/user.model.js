@@ -11,7 +11,7 @@ const User = new Schema(
     email: { ...requiredString, unique: true },
     password: requiredString,
   },
-  { collection: "UserData" }
+  { collection: "user-data" }
 );
 
 const model = _model("UserData", User);
