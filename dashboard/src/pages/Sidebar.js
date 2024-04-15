@@ -50,7 +50,7 @@ function Sidebar() {
                     </div>
                 </Link>
 
-                <Link to="/logout">
+                <Link to="/">
                     <div className="item">
                         <LogoutIcon />
                         <p>LOGOUT</p>

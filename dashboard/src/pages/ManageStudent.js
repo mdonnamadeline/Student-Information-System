@@ -109,7 +109,7 @@ function ManageStudent() {
     try {
       const response = await axios.post(
         "http://localhost:1337/addstudentmongo",
-        user // use 'user' instead of 'currentUser'
+        user 
       );
   
       const result = await response.data;

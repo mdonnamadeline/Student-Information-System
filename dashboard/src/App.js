@@ -7,7 +7,6 @@ import ViewUser from "./pages/ViewUser";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ManageStudent from "./pages/ManageStudent";
-import Logout from "./pages/Logout";
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
         <Route path="/viewuser" element={<ViewUser />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/managestudent" element={<ManageStudent />} />
-        <Route path="/logout" element={<Logout />} />
         <Route path="/demo" element={<Demo />} />
       </Routes>
     </BrowserRouter>
