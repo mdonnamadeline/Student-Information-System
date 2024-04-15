@@ -20,7 +20,7 @@ function SignUp() {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate('/login');
+    navigate('/');
   };
 
   const handleChange = (e) => {
@@ -37,7 +37,7 @@ function SignUp() {
       const result = await response.data;
 
       if (result.success) {
-        navigate("/Login");
+        navigate("/");
       }
       alert(result.message);
     } catch (error) {
@@ -58,7 +58,7 @@ function SignUp() {
             variant="outlined"
             value={user.firstname}
             onChange={handleChange}
-            inputProps={{ pattern: "^[A-Za-z]+$" }}
+            inputProps={{ pattern: "^[A-Za-z ]+$" }}
           />
 
           <TextField

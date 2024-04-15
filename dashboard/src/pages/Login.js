@@ -1,11 +1,9 @@
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Login.css";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
-
 
 function Login() {
   const [user, setUser] = useState({
@@ -15,6 +13,15 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
+
+  const AreYouValid = useCallback(() => {
+    const valid = localStorage.getItem('user');
+    if (valid) return navigate('/dashboard');
+  }, [navigate]);
+  
+  useEffect(() => {
+    AreYouValid();
+  }, [AreYouValid]);
 
   const handleSignUp = () => {
     navigate('/signup');
@@ -28,12 +35,13 @@ function Login() {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();  try {
+    e.preventDefault();  
+    try {
         const response = await axios.post("http://localhost:1337/login", user);
         const result = await response.data;
   
         if (result.success) {
-            navigate('/');
+            navigate('/dashboard');
         }
         alert(result.message);
       } catch (error) {
