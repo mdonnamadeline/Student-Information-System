@@ -94,6 +94,7 @@ function ManageStudent() {
             if (result.success) {
                 alert(result.message);
                 setRefreshData(!refreshData);
+                setOpen(false);
             } else {
                 alert("Failed to update student. Please try again!.");
             }

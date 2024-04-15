@@ -50,7 +50,7 @@ function Sidebar() {
                     </div>
                 </Link>
 
-                <Link to="/">
+                <Link to="/" onClick={() => localStorage.removeItem('user')}>
                     <div className="item">
                         <LogoutIcon />
                         <p>LOGOUT</p>
