@@ -75,7 +75,7 @@ function ManageStudent() {
 
   const handleChange = (e) => {
     setUser({
-      ...user,
+      ...users,
       [e.target.name || e.target.id]: e.target.value,
     });
   };
@@ -86,7 +86,7 @@ function ManageStudent() {
     try {
       const response = await axios.post(
         "http://localhost:1337/updatestudentmongo",
-        user
+        users
       );
   
       const result = response.data;
