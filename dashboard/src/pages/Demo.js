@@ -1,9 +1,10 @@
 import { Button, TextField } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import "./Sidebar";
 import { useState } from "react";
 import "./demo.css";
+import { useNavigate } from "react-router-dom";
 
 function Demo() {
   // dito sa taas ng return ang mga logic
@@ -11,6 +12,7 @@ function Demo() {
   const [color, setColor] = useState("");
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
+  const navigate = useNavigate();
 
   function handleAddCar() {
     console.log(brand);
@@ -19,6 +21,12 @@ function Demo() {
     console.log(year);
   }
 
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      console.log("User not logged in");
+      navigate("/");
+    }
+  }, []);
   return (
 
         <div className="demo-container">
