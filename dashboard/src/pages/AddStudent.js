@@ -6,11 +6,12 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import "./Sidebar";
 import Sidebar from "./Sidebar";
 import "./AddStudent.css";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 function AddStudent() {
   const [student, setStudent] = useState({
@@ -81,6 +82,13 @@ function AddStudent() {
       [e.target.id]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      console.log("User not logged in");
+      Navigate("/");
+    }
+  }, []);
 
   return (
     <div className="addstudent">

@@ -1,6 +1,6 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SignUp.css";
@@ -46,6 +46,7 @@ function SignUp() {
       alert("An error occured. Please try again.");
     }
   };
+
   //MARK:DISPLAY
   return (
     <div className="SignUpContainer">

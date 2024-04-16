@@ -20,6 +20,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 // style ng Modal
 const style = {
@@ -41,7 +42,13 @@ function ViewStudent() {
   const [currentStudent, setCurrentStudent] = useState(null);
   const [refreshData, setRefreshData] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (!localStorage.getItem('user')) {
+      console.log('User not logged in');
+      navigate('/');
+  }
     axios
       .get("http://localhost:1337/viewStudents")
       .then((response) => {

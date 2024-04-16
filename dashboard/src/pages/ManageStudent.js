@@ -20,6 +20,7 @@ import {
 import Sidebar from "./Sidebar";
 import "./Sidebar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const style = {
     position: "absolute",
@@ -39,6 +40,7 @@ function ManageStudent() {
     const [open, setOpen] = useState(false);
     const [refreshData, setRefreshData] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
+    const navigate = useNavigate();
 
     const initialData = {
         id: "",
@@ -62,7 +64,12 @@ function ManageStudent() {
         setOpen(false);
     }
 
-    useEffect(() => {
+    useEffect(() => { 
+
+        if (!localStorage.getItem('user')) {
+            console.log('User not logged in');
+            navigate('/');
+        }
         axios
             .get(`http://localhost:1337/viewstudentsmongo`)
             .then((response) => {
@@ -71,7 +78,7 @@ function ManageStudent() {
             .catch((error) => {
                 console.error("Error fetching data:", error);
             });
-    }, [refreshData]);
+    }, [refreshData, navigate]);
 
     const handleChange = (e) => {
         setCurrentUser({

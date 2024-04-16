@@ -5,12 +5,9 @@ import "./ViewUser.css";
 import {
   Box,
   Button,
-  FormControl,
   IconButton,
   InputAdornment,
-  InputLabel,
   Modal,
-  OutlinedInput,
   Table,
   TableBody,
   TableCell,
@@ -22,6 +19,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -42,6 +40,7 @@ function ViewUser() {
   const [refreshData, setRefreshData] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
     firstname: "",
@@ -66,6 +65,10 @@ function ViewUser() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   useEffect(() => {
+    if (!localStorage.getItem('user')) {
+      console.log('User not logged in');
+      navigate('/');
+  }
     axios
       .get(`http://localhost:1337/viewusers`)
       .then((response) => {
