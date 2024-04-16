@@ -78,6 +78,7 @@ useEffect(() => {
     <div className="loginContainer">
       <div className="loginMain">
         <p>STUDENT INFORMATION SYSTEM</p>
+        <p>Welcome Back!</p>
         <form className="loginForm" onSubmit={handleLogin}>
           <TextField
             required
