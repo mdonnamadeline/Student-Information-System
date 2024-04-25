@@ -6,10 +6,12 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
+
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+  
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ function Login() {
 
     navigate("/signup")
   }
+  
   const handleLogin = async (e) => {
     e.preventDefault();
 

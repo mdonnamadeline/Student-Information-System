@@ -64,11 +64,10 @@ function ManageStudent() {
         setOpen(false);
     }
 
-    useEffect(() => { 
-
-        if (!localStorage.getItem('user')) {
-            console.log('User not logged in');
-            navigate('/');
+    useEffect(() => {
+        if (!localStorage.getItem("user")) {
+            console.log("User not logged in");
+            navigate("/");
         }
         axios
             .get(`http://localhost:1337/viewstudentsmongo`)
