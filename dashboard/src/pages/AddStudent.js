@@ -1,6 +1,8 @@
 import {
     Button,
     FormControl,
+    IconButton,
+    InputAdornment,
     InputLabel,
     MenuItem,
     Select,
@@ -20,7 +22,7 @@ function AddStudent() {
         lastname: "",
         middlename: "",
         course: "",
-        year: "",
+        year: ""
     });
 
     async function handleAddStudent() {
@@ -44,7 +46,7 @@ function AddStudent() {
                     lastname: "",
                     middlename: "",
                     course: "",
-                    year: "",
+                    year: ""
                 });
             }
         } catch (error) {
@@ -52,7 +54,7 @@ function AddStudent() {
             alert("An error occured. Please try again.");
         }
     }
-
+    
     const handleChange = (e) => {
         //para number lang ang mailalagay
         if (e.target.id === "id" && isNaN(e.target.value)) {
@@ -162,7 +164,6 @@ function AddStudent() {
                             <MenuItem value="5">5</MenuItem>
                         </Select>
                     </FormControl>
-
                     <Button variant="contained" type="submit">
                         ADD STUDENT
                     </Button>

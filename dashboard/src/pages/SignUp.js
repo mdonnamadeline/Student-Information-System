@@ -1,6 +1,6 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SignUp.css";
@@ -35,11 +35,11 @@ function SignUp() {
         try {
             const response = await axios.post(
                 "http://localhost:1337/signup",
-                user
+               user
             );
-
+    
             const result = response.data;
-
+    
             if (result.success) {
                 navigate("/");
             }

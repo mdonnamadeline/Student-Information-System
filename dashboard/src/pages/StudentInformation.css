@@ -1,0 +1,25 @@
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.studentUser {
+    display: flex;
+}
+
+.studentContainer {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.studentContainer h1 {
+    margin-left: 10px;
+}
+
+.tableContainer {
+    width: 500px;
+    height: 400px;
+    overflow: auto;
+}

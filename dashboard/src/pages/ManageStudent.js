@@ -4,6 +4,8 @@ import {
     Box,
     Button,
     FormControl,
+    IconButton,
+    InputAdornment,
     InputLabel,
     MenuItem,
     Modal,
@@ -21,6 +23,7 @@ import Sidebar from "./Sidebar";
 import "./Sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const style = {
     position: "absolute",
@@ -39,8 +42,12 @@ function ManageStudent() {
     const [users, setUsers] = useState([]);
     const [open, setOpen] = useState(false);
     const [refreshData, setRefreshData] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const navigate = useNavigate();
+
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+
 
     const initialData = {
         id: "",
@@ -49,6 +56,7 @@ function ManageStudent() {
         middlename: "",
         course: "",
         year: "",
+        password: "",
     };
 
     const [currentUser, setCurrentUser] = useState(initialData);
@@ -272,6 +280,34 @@ function ManageStudent() {
                                         <MenuItem value="5">5</MenuItem>
                                     </Select>
                                 </FormControl>
+
+                                <TextField
+                                    id="password"
+                                    required
+                                    label="password"
+                                    type={showPassword ? "text" : "password"}
+                                    variant="outlined"
+                                    value={currentUser.password}
+                                    onChange={handleChange}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={
+                                                        handleClickShowPassword
+                                                    }
+                                                >
+                                                    {showPassword ? (
+                                                        <Visibility />
+                                                    ) : (
+                                                        <VisibilityOff />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
                                 <div className="buttonGroup">
                                     <Button
                                         variant="contained"

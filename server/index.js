@@ -92,10 +92,7 @@ app.listen(port, () => {
 //MARK:MONGODB
 // MongoDB connection
 mongoose
-    .connect("mongodb://localhost:27017/ipt", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
+    .connect("mongodb://localhost:27017/ipt")
     .then(() => console.log("Database connected successfully"))
     .catch((err) => console.error("Database connection error", err));
 
@@ -150,11 +147,20 @@ app.post("/login", async (req, res) => {
 
     try {
         // Find the user by email
-        const user = await User.findOne({ email });
+        let user = await User.findOne({ email });
+        let role = 'user';
 
         if (!user) {
-            return res.json({ success: false, message: "User not found" });
-        }
+            user = await Student.findOne({ id: email });
+
+            if (!user) {
+                return res.json({ success: false, message: "No user found" });
+            }
+
+            role = 'student';
+        } 
+
+
 
         // Compare the provided password with the password in the database
         if (password !== user.password) {
@@ -162,7 +168,7 @@ app.post("/login", async (req, res) => {
         }
 
         // User is authenticated
-        res.json({ success: true, message: "Logged in successfully" });
+        res.json({ success: true, message: "Logged in successfully", role });
     } catch (error) {
         console.error("Error logging in:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -179,10 +185,9 @@ app.post("/signup", async (req, res) => {
         res.json({ success: true, message: "User signed up successfully!" });
     } catch (error) {
         console.error("Error adding User:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: error.message });
     }
 });
-
 //add student
 app.post("/addstudentmongo", async (req, res) => {
     const incomingData = req.body;
@@ -202,6 +207,27 @@ app.get("/viewstudentsmongo", async (req, res) => {
     try {
         const users = await Student.find({});
         res.json(users);
+    } catch (error) {
+        console.error("Error reading student data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+app.post("/studentinfo", async (req, res) => {
+    const incomingData = req.body;
+    console.log(incomingData);
+    try {
+        const student = await Student.findOne({ id: incomingData.id });
+        console.log('Found student:', student);
+
+        if (!student) {
+            res.json({
+                success: false,
+                message: "Student not found",
+            });
+        } else {
+            res.json(student);
+        }
     } catch (error) {
         console.error("Error reading student data:", error);
         res.status(500).json({ error: "Internal Server Error" });
