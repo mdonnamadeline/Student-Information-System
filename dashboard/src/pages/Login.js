@@ -1,5 +1,5 @@
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import "./Login.css";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";

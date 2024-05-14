@@ -4,51 +4,53 @@ import { Link } from "react-router-dom";
 import { HearingOutlined, Home, Info,  Visibility} from "@mui/icons-material";
 import LogoutIcon from '@mui/icons-material/Logout';
 
-function Sidebar() {
+function Sidebar({ role = 'user' }) {
+    const LinkOrDisabled = role === 'user' ? Link : ({to, children}) => <div>{children}</div>;
+
     return (
         <div className="sidebar">
             <div className="conSidebar">
-                <Link to="/">
+                <LinkOrDisabled to="/">
                     <div className="item">
                         <Home />
                         <p>HOME</p>
                     </div>
-                </Link>
+                </LinkOrDisabled>
 
-                <Link to="/addstudent">
+                <LinkOrDisabled to="/addstudent">
                     <div className="item">
                         <Info />
                         <p>ADD STUDENT</p>
                     </div>
-                </Link>
+                </LinkOrDisabled>
 
-                <Link to="/viewstudent">
+                <LinkOrDisabled to="/viewstudent">
                     <div className="item">
                         <Visibility />
                         <p>VIEW STUDENT</p>
                     </div>
-                </Link>
+                </LinkOrDisabled>
 
-                <Link to="/viewuser">
+                <LinkOrDisabled to="/viewuser">
                     <div className="item">
                         <Visibility />
                         <p>VIEW USER</p>
                     </div>
-                </Link>
+                </LinkOrDisabled>
 
-                <Link to="/managestudent">
+                <LinkOrDisabled to="/managestudent">
                     <div className="item">
                         <Visibility />
                         <p>MANAGE STUDENT</p>
                     </div>
-                </Link>
+                </LinkOrDisabled>
 
-                <Link to="/demo">
+                <LinkOrDisabled to="/demo">
                     <div className="item">
                         <HearingOutlined />
                         <p>DEMO</p>
                     </div>
-                </Link>
+                </LinkOrDisabled>
 
                 <Link to="/" onClick={() => localStorage.removeItem('user')}>
                     <div className="item">
@@ -56,7 +58,6 @@ function Sidebar() {
                         <p>LOGOUT</p>
                     </div>
                 </Link>
-
 
             </div>
         </div>

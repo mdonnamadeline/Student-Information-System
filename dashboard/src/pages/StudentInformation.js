@@ -42,11 +42,11 @@ function StudentInformation() {
 
     return (
         <div className="studentUser">
-            <Sidebar />
+            <Sidebar role='student' />
             <div className="studentContainer">
                 <h1>STUDENT INFORMATION</h1>
                 {currentUser && (
-                    <div>
+                    <div className="container">
                         <p>ID: {currentUser.id}</p>
                         <p>First Name: {currentUser.firstname}</p>
                         <p>Middle Name: {currentUser.middlename}</p>

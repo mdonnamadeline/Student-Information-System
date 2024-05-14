@@ -13,13 +13,3 @@ body {
     align-items: flex-start;
     flex: 1;
 }
-
-.studentContainer h1 {
-    margin-left: 10px;
-}
-
-.tableContainer {
-    width: 500px;
-    height: 400px;
-    overflow: auto;
-}
